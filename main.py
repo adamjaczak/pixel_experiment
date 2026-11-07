@@ -15,7 +15,7 @@ def recalculate_pixel_data(r, g, b):
 
     return (255,255,255, brightness - 255)
 
-image_path = "portrait-beautiful-blond-woman-with-trendy-hairstyle.jpg"
+image_path = "00_classic_and_sports_car_starter_classics_Merc_200_TB.png"
 
 image = Image.open(image_path).convert("RGB")
 
@@ -75,6 +75,23 @@ def duotone(image, gradient_bottom: tuple, gradient_top : tuple):
 
     image.save("duotone.jpg")
 
+
+def crt_effect(image):
+    pixels = image.load()
+    width, height = image.size
+    for y in range(height):
+        for x in range(width):
+            is_scanline = (y % 2 == 0)
+            r, g, b = pixels[x, y]
+            if is_scanline:
+                r = int(r * 0.4)
+                g = int(g * 0.4)
+                b = int(b * 0.4)
+                pixels[x, y] = (r, g, b)
+
+    image.save("crt_output.png")
+
 #one_bit_dither(image)
 #posterize(image)
-duotone(image, (10, 10, 30), (150, 255, 184))
+#duotone(image, (10, 10, 30), (150, 255, 184))
+crt_effect(image)
